@@ -8,22 +8,36 @@
   </head>
   <body>
     <!-- <form action="/submit" method="post"> -->
+      <div class="form">
+        <h1>Form</h1>
+      <input
+      type="email"
+      placeholder="Enter your email"
+      name="email"
+      id="email"
+      onkeyup="as()"
+      required
+    />
+    <br />
     <input
       type="text"
       placeholder="Enter your name"
       name="surname"
       id="name"
       onkeyup="as()"
-  
+      required
     />
+    <br />
     <input
       type="number"
       placeholder="Enter your age"
       name="age"
       id="age"
-      
+      required
     />
-    <button onclick="sendData()">Send</button>
+    <br />
+    <button onclick="sendData()" class="form-but">Send</button>
+  </div>
     <!-- </form> -->
     <script src="script.js"></script>
   </body>

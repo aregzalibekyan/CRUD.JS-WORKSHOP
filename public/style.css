@@ -1,3 +1,29 @@
 body {
   background-color: rgb(204, 164, 241);
+  font-family:sans-serif;
+}
+.form {
+  display:flex;
+  flex-direction:column;
+  width:300px;
+  margin:auto;
+  transform: translateY(400px);
+  overflow:hidden;
+  border:1px black solid;
+  padding:20px;
+  justify-content: center;
+  text-align:center;
+  border-radius:25px;
+}
+.form-but {
+  padding:10px;
+  font-size:20px;
+  border-radius:10px;
+  border:transparent;
+  cursor:pointer;
+}
+input {
+  border:transparent;
+  border-radius:5px;
+  padding:10px;
 }

@@ -1,4 +1,4 @@
-const express = require("express");
+  const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const path = require("path");
@@ -27,7 +27,7 @@ app.post("/addInfo", function (req, res) {
       });
       console.log(
         await mongoose.connection.db.collection("users").findOne({
-          name: surname,
+          email:email,
         })
       );
     } catch (e) {

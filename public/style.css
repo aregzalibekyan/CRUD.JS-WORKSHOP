@@ -12,7 +12,6 @@ body {
   margin: auto;
   transform: translateY(200px);
   overflow: hidden;
-  border: 1px black solid;
   padding: 20px;
   justify-content: center;
   text-align: center;
@@ -24,11 +23,11 @@ body {
   border-radius: 10px;
   border: transparent;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 input {
   border: transparent;
   border-radius: 5px;
   padding: 10px;
-  margin-top: 10px;
+  margin-top: 5px;
 }

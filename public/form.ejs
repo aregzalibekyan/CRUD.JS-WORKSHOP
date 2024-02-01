@@ -18,18 +18,37 @@
   <form action="/addInfo" method="post">
     <div class="form">
       <h1>Form</h1>
-      <input type="email" placeholder="Enter your email" name="email" id="email" onkeyup="as()" required />
+      <input type="text" placeholder="Please enter your product title." name="title" id="title" required />
       <br />
-      <input type="text" placeholder="Enter your name" name="surname" id="name" onkeyup="as()" required />
+      <input type="number" placeholder="Please enter your product price." name="price" id="price" required />
       <br />
-      <input type="number" placeholder="Enter your age" name="age" id="age" required />
+      <input type="text" placeholder="Please enter your product description." name="description" id="description" required />
+      <br />
+      <input type="text" placeholder="Please enter your product image url." name="imgUrl" id="imgUrl" required />
+      <br />
+      <input type="text" placeholder="Please enter your product UUID." name="UUID" id="UUID" required />
+
       <br />
       <button type="submit" class="form-but">Send</button>
     </div>
   </form>
-  <ul>
-   
-  </ul>
+
+  <table border=0 cellspacing=0>
+    <tr class="trhead">
+        <td>Title</td>
+        <td>Price</td>
+        <td>Update</td>
+        <td>Delete</td>
+    </tr>
+     <% obj.forEach((justOne) => { %>
+    <tr>
+        <td><%= justOne.title %></td>
+        <td><%= justOne.price %></td>
+        <td><a class="update" href="update/<%= justOne.UUID %>"">Update</a></td>
+        <td><a class="delete" href="update/<%= justOne.UUID %>">Delete</a></td>
+    </tr>
+<% }); %>
+</table>
   <!-- <script src="script.js"></script> -->
 </body>
 

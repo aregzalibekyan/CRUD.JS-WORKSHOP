@@ -5,12 +5,16 @@ body {
   font-weight:lighter;
   color:white;
 }
-.form {
-  display: flex;
-  flex-direction: column;
+.form,table{
+
   width: 300px;
   margin: auto;
   transform: translateY(200px);
+
+}
+.form {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   padding: 20px;
   justify-content: center;
@@ -30,4 +34,23 @@ input {
   border-radius: 5px;
   padding: 10px;
   margin-top: 5px;
+}
+table {
+
+}
+table tr td{
+  margin: 10px;
+  padding: 10px;
+  border-collapse:collapse;
+  text-align: center;
+
+  }
+
+
+ 
+.trhead {
+  background-color:#9361f2
+}
+tr {
+  background-color:#4c10f3;
 }

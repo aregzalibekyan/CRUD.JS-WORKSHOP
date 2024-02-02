@@ -4,11 +4,10 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const port = 4000;
 const mongoose = require("mongoose");
-const { UUID } = require("mongodb");
+const { ObjectId } = require("mongoose").Types;
 const connectionString =
-  "mongodb+srv://aregzalibekyan:613235Ruz.@cluster0.p1fxrej.mongodb.net/Tumo_products";
+  "mongodb+srv://aregzalibekyan:613235RuzannaQ@cluster0.p1fxrej.mongodb.net/Tumo_products";
 const db1 = mongoose.connection;
-const { Schema } = mongoose;
 db1.on("error", console.error.bind(console, "Connection error:"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,7 +23,7 @@ app.get("/", function (req, res) {
         .find()
         .toArray();
       res.render("../public/form.ejs", {
-        obj:obj
+        obj: obj,
       });
     } catch (e) {
     } finally {
@@ -34,14 +33,13 @@ app.get("/", function (req, res) {
   });
 });
 
-
 app.post("/addInfo", (req, res) => {
-  let [title, price, description,imgUrl,UUID] = [
+  let [title, price, description, imgUrl, UUID] = [
     req.body.title,
     req.body.price,
     req.body.description,
     req.body.imgUrl,
-    req.body.UUID
+    req.body.UUID,
   ];
   mongoose.connect(connectionString, { useUnifiedTopology: true });
   db1.once("open", async () => {
@@ -49,10 +47,11 @@ app.post("/addInfo", (req, res) => {
       await mongoose.connection.db.collection("products").insertOne({
         title: title,
         price: price,
-        description:description,
-        imgUrl : imgUrl,
-        UUID:UUID,
+        description: description,
+        imgUrl: imgUrl,
+        UUID: UUID,
       });
+      res.redirect("/");
     } catch (e) {
       throw new Error(`Something wrong: ${e}`);
     } finally {
@@ -63,58 +62,101 @@ app.post("/addInfo", (req, res) => {
     // Make sure to close the connection when you're done
   });
 
-  res.redirect("/");
+
 
   // Check the connection
 });
-app.get("/update/:UUID",(req,res) => {
-  mongoose.connect(connectionString, { useUnifiedTopology: true });
-  var id = req.params.UUID;
-  db1.once("open", async () => {
+app.get("/update/:id", function (req, res) {
+  var id = req.params.id;
+  mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "Connection error:"));
+  db.once("open", async () => {
     try {
-      const obj = await mongoose.connection.db
+      let result = await mongoose.connection.db
         .collection("products")
-        .findOne({
-          UUID:id,
-        })
-      res.render("../public/update.ejs", {
-        obj:obj
-      });
-    } catch (e) {
+        .findOne({ _id: new ObjectId(id) });
+      res.render("../public/update.ejs", { obj: result });
+    } catch (error) {
+      console.error("Error occured:", error);
     } finally {
-      console.log("Connection closed");
       mongoose.connection.close();
     }
   });
-})
-  app.post("/updateData", function (req, res) {
+});
+app.get("/delete/:id", function (req, res) {
+  var id = req.params.id;
+  mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "Connection error:"));
+  db.once("open", async () => {
+    try {
+      await mongoose.connection.db.collection('products').findOneAndDelete({_id: new ObjectId(id) });
+      
+    } catch (error) {
+      console.error("Error occured:", error);
+    } finally {
+      mongoose.connection.close();
+    }
+  });
+  res.redirect('/')
+});
+app.post("/updateData", async function (req, res) {
+  try {
     const name = req.body.title;
     const price = req.body.price;
     const image = req.body.imgUrl;
     const des = req.body.description;
     const uuid = req.body.UUID;
-    mongoose.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true });
+    const id = req.body.id;
+console.log("Received ID for update:", id);
+    
+    mongoose.connect(connectionString, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
     const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'Connection error:'));
-    db.once('open', async () => {
-        console.log('Connected to MongoDB!');
-        try {
-            let result = await mongoose.connection.db.collection('products').updateOne({$or : {
-                name: name,
+
+    db.on("error", console.error.bind(console, "Connection error:"));
+
+    db.once("open", async () => {
+      console.log("Connected to MongoDB!");
+
+      try {
+        let result = await mongoose.connection.db
+          .collection("products")
+          .updateOne(
+            { _id: new ObjectId(id) },
+            {
+              $set: {
+                title: name,
                 price: price,
                 image: image,
                 description: des,
-                uuid: uuid
-            } })
-            // res.json(result);
-            res.json(result)
-        } catch (error) {
-            console.error('Error retrieving movies:', error);
-        } finally {
-            mongoose.connection.close();
-        }
-    })
-    res.redirect('/')
+                UUID: uuid,
+              },
+            }
+          );
+          res.redirect('/');
+
+      } catch (error) {
+        console.error("Error updating product:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+      } finally {
+        mongoose.connection.close();
+      }
+    });
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
 
 app.listen(port, () => {

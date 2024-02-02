@@ -27,7 +27,7 @@
       <input type="text" placeholder="Please enter your product image url." name="imgUrl" id="imgUrl" required />
       <br />
       <input type="text" placeholder="Please enter your product UUID." name="UUID" id="UUID" required />
-
+      
       <br />
       <button type="submit" class="form-but">Send</button>
     </div>
@@ -44,8 +44,8 @@
     <tr>
         <td><%= justOne.title %></td>
         <td><%= justOne.price %></td>
-        <td><a class="update" href="update/<%= justOne.UUID %>"">Update</a></td>
-        <td><a class="delete" href="update/<%= justOne.UUID %>">Delete</a></td>
+        <td><a class="update" href="update/<%= justOne._id %>"">Update</a></td>
+        <td><a class="delete" href="delete/<%= justOne._id %>">Delete</a></td>
     </tr>
 <% }); %>
 </table>

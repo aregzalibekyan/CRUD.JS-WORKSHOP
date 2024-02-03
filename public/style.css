@@ -103,26 +103,28 @@ table {
   transition: color 0.3s ease;
 }
 
-.update:hover {
+.update:hover,table tr:nth-child(odd) .update:hover {
   color: skyblue;
 }
 
-.delete:hover {
+.delete:hover,table tr:nth-child(odd) .delete:hover {
   color: red;
 }
 
 table tr:nth-child(odd) .update,
-table tr:nth-child(odd) .delete {
+table tr:nth-child(odd) .delete,
+table tr:nth-child(odd) .single {
   color: white;
   transition: color 0.3s ease;
 }
-table tr:nth-child(odd) .update:hover {
-  color: skyblue;
-}
-table tr:nth-child(odd) .delete:hover {
-  color: red;
-}
+
 table tr:nth-child(odd) td {
   background-color: black;
   color:white;
+}
+.single {
+  color:black;
+}
+.single:hover,table tr:nth-child(odd) .single:hover {
+  color:brown;
 }

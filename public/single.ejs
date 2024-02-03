@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      html {
+        background: linear-gradient(#d4145a, #fbb03b);
+        background-repeat: no-repeat;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      body {
+        font-family: "poppins", sans-serif;
+        font-weight: lighter;
+        color: white;
+      }
+
+      .form-but {
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: transparent;
+        cursor: pointer;
+        margin-top: 5px;
+        background-color: white;
+        text-decoration: none;
+        color: black;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .form-but:hover {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+      .sides {
+        display:flex;
+        align-items: center;
+        
+      }
+      .right {
+        margin-left:100px;
+      }
+      li {
+        font-size:20px;
+        font-weight:bold;
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="img/icon.png" />
+  </head>
+  <body>
+    <div class="sides">
+      <div class="left">
+        <h1><%= obj.title %></h1>
+        <img src="<%= obj.imgUrl %>" width="70%" />
+      </div>
+      <div class="right">
+        <ul>
+        <li>Price:<%= obj.price %>$</lo>
+        <li>Description:<%= obj.description%></li>
+        <li>UUID:<%= obj.UUID %></li>
+        </ul>
+        <a href="/" class="form-but a">Get back!</a>
+      </div>
+    </div>
+    
+  </body>
+</html>

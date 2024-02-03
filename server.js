@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const path = require("path");
 const port = 4000;
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
@@ -50,14 +49,34 @@ app.get("/", function (req, res) {
     }
   });
 });
-
+app.get('/single/:id', (req,res) => {
+  var id = req.params.id;
+  mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "Connection error:"));
+  db.once("open", async () => {
+    try {
+      let result = await mongoose.connection.db
+        .collection("products")
+        .findOne({ _id: new ObjectId(id) });
+      res.render("../public/single.ejs", { obj: result });
+    } catch (error) {
+      console.error("Error occured:", error);
+    } finally {
+      mongoose.connection.close();
+    }
+  });
+})
 app.post("/addInfo", (req, res) => {
   let [title, price, description, imgUrl, UUID] = [
     req.body.title.substring(0, 20),
     Number.parseFloat(req.body.price).toFixed(2),
     req.body.description.substring(0, 50),
     req.body.imgUrl,
-    req.body.UUID,
+    req.body.UUID.substring(0,20),
   ];
   let arr = [title, price, description, imgUrl, UUID]
   if (!something(arr, res)) {
@@ -84,11 +103,9 @@ app.post("/addInfo", (req, res) => {
     // You can add additional code here for testing or other operations
     // Make sure to close the connection when you're done
   });
+})
 
-
-
-  // Check the connection
-});
+ 
 app.get("/update/:id", function (req, res) {
   var id = req.params.id;
   mongoose.connect(connectionString, {
@@ -109,27 +126,7 @@ app.get("/update/:id", function (req, res) {
       mongoose.connection.close();
     }
   });
-});
-app.get("/delete/:id", function (req, res) {
-  var id = req.params.id;
-  mongoose.connect(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  const db = mongoose.connection;
-  db.on("error", console.error.bind(console, "Connection error:"));
-  db.once("open", async () => {
-    try {
-      await mongoose.connection.db.collection('products').findOneAndDelete({ _id: new ObjectId(id) });
-      res.redirect('/')
-    } catch (error) {
-      console.error("Error occured:", error);
-    } finally {
-      mongoose.connection.close();
-    }
-  });
-  
-});
+
 app.post("/updateData", async function (req, res) {
   try {
     const [title, price, imgUrl, descr, uuid, id] = [
@@ -137,7 +134,7 @@ app.post("/updateData", async function (req, res) {
       Number.parseFloat(req.body.price).toFixed(2),
       req.body.imgUrl,
       req.body.description.substring(0, 50),
-      req.body.UUID,
+      req.body.UUID.substring(0,20),
       req.body.id
     ]
     let arr = [title, price, descr, imgUrl, uuid]
@@ -145,6 +142,7 @@ app.post("/updateData", async function (req, res) {
       return;
 
     }
+    
     console.log("Received ID for update:", id);
 
     mongoose.connect(connectionString, {
@@ -188,6 +186,29 @@ app.post("/updateData", async function (req, res) {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// Check the connection
+});
+app.get("/delete/:id", function (req, res) {
+  var id = req.params.id;
+  mongoose.connect(connectionString, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  const db = mongoose.connection;
+  db.on("error", console.error.bind(console, "Connection error:"));
+  db.once("open", async () => {
+    try {
+      await mongoose.connection.db.collection('products').findOneAndDelete({ _id: new ObjectId(id) });
+      res.redirect('/')
+    } catch (error) {
+      console.error("Error occured:", error);
+    } finally {
+      mongoose.connection.close();
+    }
+  });
+  
+});
+
 app.get('/*', (req, res) => {
   res.status(404).send("404:The requested page cannot be found.")
 })

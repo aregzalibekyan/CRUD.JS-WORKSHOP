@@ -41,6 +41,7 @@
         <td>Price</td>
         <td>Update</td>
         <td>Delete</td>
+        <td>Single</td>
     </tr>
      <% obj.forEach((justOne) => { %>
     <tr>
@@ -48,6 +49,7 @@
         <td><%= justOne.price %>$</td>
         <td><a class="update" href="update/<%= justOne._id %>">Update</a></td>
         <td><a class="delete" href="delete/<%= justOne._id %>">Delete</a></td>
+        <td><a class="single" href="single/<%= justOne._id %>">Single</a></td>
     </tr>
 <% }); %>
 <% } %>

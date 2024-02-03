@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Form</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -20,7 +20,7 @@
       <h1>Form</h1>
       <input type="text" placeholder="Please enter your product title." name="title" id="title" required />
       <br />
-      <input type="number" placeholder="Please enter your product price." name="price" id="price" required />
+      <input type="number" placeholder="Please enter your product price(dollars)." name="price" id="price" step='0.01'  required />
       <br />
       <input type="text" placeholder="Please enter your product description." name="description" id="description" required />
       <br />
@@ -43,8 +43,8 @@
      <% obj.forEach((justOne) => { %>
     <tr>
         <td><%= justOne.title %></td>
-        <td><%= justOne.price %></td>
-        <td><a class="update" href="update/<%= justOne._id %>"">Update</a></td>
+        <td><%= justOne.price %>$</td>
+        <td><a class="update" href="update/<%= justOne._id %>">Update</a></td>
         <td><a class="delete" href="delete/<%= justOne._id %>">Delete</a></td>
     </tr>
 <% }); %>

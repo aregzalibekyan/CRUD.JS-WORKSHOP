@@ -1,17 +1,23 @@
+html {
+  background: linear-gradient(#D4145A, #FBB03B);
+  background-repeat: no-repeat;
+  width: 100vw;
+  height: 100vh;
+}
 
 body {
-  background-color: rgb(204, 164, 241);
   font-family: "poppins", sans-serif;
-  font-weight:lighter;
-  color:white;
+  font-weight: lighter;
+  color: white;
 }
-.form,table{
 
+.form,
+table {
   width: 300px;
   margin: auto;
-  transform: translateY(10px);
 
 }
+
 .form {
   display: flex;
   flex-direction: column;
@@ -20,7 +26,9 @@ body {
   justify-content: center;
   text-align: center;
   border-radius: 25px;
+
 }
+
 .form-but {
   padding: 10px;
   font-size: 20px;
@@ -29,28 +37,64 @@ body {
   cursor: pointer;
   margin-top: 5px;
 }
+
 input {
   border: transparent;
-  border-radius: 5px;
-  padding: 10px;
+  background-color:transparent;
+  color:white;
+  padding-bottom:10px;
   margin-top: 5px;
+  border-bottom: 1px white solid;
 }
-table {
+input:focus {
+  outline: none;
+}
+::placeholder {
+  color: white;
+  opacity: 1; 
+}
 
-}
-table tr td{
+table tr td {
   margin: 10px;
   padding: 10px;
-  border-collapse:collapse;
+  border-collapse: collapse;
   text-align: center;
-
-  }
-
-
- 
-.trhead {
-  background-color:#9361f2
+  background-color: #FFFBF5;
+  color: #333;
+  
 }
+
+table {
+  border-spacing: 2px;
+  border-color: gray;
+
+}
+
+.trhead {
+  color: #333;
+  font-weight: bold
+}
+
+table,
+th,
+td {
+  border-collapse: separate;
+  border-spacing: 1px;
+
+}
+
+table {
+  background: gray;
+}
+
 tr {
-  background-color:#4c10f3;
+  background: #fff;
+}
+
+.update,
+.delete {
+  color: black
+}
+.a {
+  background-color:white;
 }

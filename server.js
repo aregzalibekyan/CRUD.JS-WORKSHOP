@@ -13,9 +13,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
+function something(arr, res) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === '') {
+      res.status(400).send('Something wrong! You should type all info about the product!');
+      return false;
+    }
+  }
 
+  if (isNaN(arr[1])) {
+    res.status(400).send('Something wrong! The price should be a number!');
+    return false;
+  }
+
+  return true;
+}
 app.get("/", function (req, res) {
   mongoose.connect(connectionString, { useUnifiedTopology: true });
+
   db1.once("open", async () => {
     try {
       const obj = await mongoose.connection.db
@@ -35,12 +50,17 @@ app.get("/", function (req, res) {
 
 app.post("/addInfo", (req, res) => {
   let [title, price, description, imgUrl, UUID] = [
-    req.body.title,
-    req.body.price,
-    req.body.description,
+    req.body.title.substring(0, 20),
+    Number.parseInt(req.body.price, 10),
+    req.body.description.substring(0, 50),
     req.body.imgUrl,
     req.body.UUID,
   ];
+  let arr = [title, price, description, imgUrl, UUID]
+  if (!something(arr, res)) {
+    return;
+
+  }
   mongoose.connect(connectionString, { useUnifiedTopology: true });
   db1.once("open", async () => {
     try {
@@ -97,8 +117,8 @@ app.get("/delete/:id", function (req, res) {
   db.on("error", console.error.bind(console, "Connection error:"));
   db.once("open", async () => {
     try {
-      await mongoose.connection.db.collection('products').findOneAndDelete({_id: new ObjectId(id) });
-      
+      await mongoose.connection.db.collection('products').findOneAndDelete({ _id: new ObjectId(id) });
+
     } catch (error) {
       console.error("Error occured:", error);
     } finally {
@@ -109,14 +129,21 @@ app.get("/delete/:id", function (req, res) {
 });
 app.post("/updateData", async function (req, res) {
   try {
-    const name = req.body.title;
-    const price = req.body.price;
-    const image = req.body.imgUrl;
-    const des = req.body.description;
-    const uuid = req.body.UUID;
-    const id = req.body.id;
-console.log("Received ID for update:", id);
-    
+    const [title, price, imgUrl, descr, uuid, id] = [
+      req.body.title.substring(0, 20),
+      Number.parseInt(req.body.price, 10),
+      req.body.description.substring(0, 50),
+      req.body.imgUrl,
+      req.body.UUID,
+      req.body.id
+    ]
+    let arr = [title, price, descr, imgUrl, uuid]
+    if (!something(arr, res)) {
+      return;
+
+    }
+    console.log("Received ID for update:", id);
+
     mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
@@ -130,21 +157,21 @@ console.log("Received ID for update:", id);
       console.log("Connected to MongoDB!");
 
       try {
-        let result = await mongoose.connection.db
+        await mongoose.connection.db
           .collection("products")
           .updateOne(
             { _id: new ObjectId(id) },
             {
               $set: {
-                title: name,
+                title: title,
                 price: price,
-                image: image,
-                description: des,
+                image: imgUrl,
+                description: descr,
                 UUID: uuid,
               },
             }
           );
-          res.redirect('/');
+        res.redirect('/');
 
       } catch (error) {
         console.error("Error updating product:", error);
@@ -158,7 +185,9 @@ console.log("Received ID for update:", id);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
+app.get('/*', (req, res) => {
+  res.status(404).send("404:The requested page cannot be found.")
+})
 app.listen(port, () => {
   console.log(`App is running on ${port} port`);
 });

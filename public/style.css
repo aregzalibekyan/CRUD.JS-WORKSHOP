@@ -26,7 +26,7 @@ table {
   justify-content: center;
   text-align: center;
   border-radius: 25px;
-
+  
 }
 
 .form-but {
@@ -36,12 +36,19 @@ table {
   border: transparent;
   cursor: pointer;
   margin-top: 5px;
+  background-color: white;
+  text-decoration: none;
+  color:black;
+  transition: background-color 0.3s ease;
 }
-
+.form-but:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
 input {
+  color:white;
   border: transparent;
   background-color:transparent;
-  color:white;
   padding-bottom:10px;
   margin-top: 5px;
   border-bottom: 1px white solid;
@@ -61,7 +68,8 @@ table tr td {
   text-align: center;
   background-color: #FFFBF5;
   color: #333;
-  
+  font-size:18px;
+  font-weight:300
 }
 
 table {
@@ -71,6 +79,7 @@ table {
 }
 
 .trhead {
+  background-color:black;
   color: #333;
   font-weight: bold
 }
@@ -87,14 +96,14 @@ table {
   background: gray;
 }
 
-tr {
-  background: #fff;
-}
-
 .update,
 .delete {
-  color: black
+  color: black;
+  transition:color 0.3s  ease
 }
-.a {
-  background-color:white;
+.update:hover {
+  color:skyblue;
+}
+.delete:hover {
+  color:red;
 }

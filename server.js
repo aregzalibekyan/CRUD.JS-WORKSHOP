@@ -15,7 +15,7 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 function something(arr, res) {
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === '') {
+    if (arr[i] === '' || arr[i] === null) {
       res.status(400).send('Something wrong! You should type all info about the product!');
       return false;
     }
@@ -23,6 +23,9 @@ function something(arr, res) {
 
   if (isNaN(arr[1])) {
     res.status(400).send('Something wrong! The price should be a number!');
+    return false;
+  } else if(arr[1] < 0 || arr[1] > 9999999999) {
+    res.status(400).send("Something wrong! The number shouldn't be more 9999999999 or less 0!");
     return false;
   }
 
@@ -51,7 +54,7 @@ app.get("/", function (req, res) {
 app.post("/addInfo", (req, res) => {
   let [title, price, description, imgUrl, UUID] = [
     req.body.title.substring(0, 20),
-    Number.parseInt(req.body.price, 10),
+    Number.parseFloat(req.body.price).toFixed(2),
     req.body.description.substring(0, 50),
     req.body.imgUrl,
     req.body.UUID,
@@ -66,7 +69,7 @@ app.post("/addInfo", (req, res) => {
     try {
       await mongoose.connection.db.collection("products").insertOne({
         title: title,
-        price: price,
+        price: Number.parseFloat(price),
         description: description,
         imgUrl: imgUrl,
         UUID: UUID,
@@ -118,22 +121,22 @@ app.get("/delete/:id", function (req, res) {
   db.once("open", async () => {
     try {
       await mongoose.connection.db.collection('products').findOneAndDelete({ _id: new ObjectId(id) });
-
+      res.redirect('/')
     } catch (error) {
       console.error("Error occured:", error);
     } finally {
       mongoose.connection.close();
     }
   });
-  res.redirect('/')
+  
 });
 app.post("/updateData", async function (req, res) {
   try {
     const [title, price, imgUrl, descr, uuid, id] = [
       req.body.title.substring(0, 20),
-      Number.parseInt(req.body.price, 10),
-      req.body.description.substring(0, 50),
+      Number.parseFloat(req.body.price).toFixed(2),
       req.body.imgUrl,
+      req.body.description.substring(0, 50),
       req.body.UUID,
       req.body.id
     ]
@@ -165,7 +168,7 @@ app.post("/updateData", async function (req, res) {
               $set: {
                 title: title,
                 price: price,
-                image: imgUrl,
+                imgUrl: imgUrl,
                 description: descr,
                 UUID: uuid,
               },

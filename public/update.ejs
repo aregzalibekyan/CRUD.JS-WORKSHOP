@@ -5,12 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Update</title>
+  <link rel="icon" type="image/x-icon" href="img/icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
     rel="stylesheet" />
-  <!-- <link rel="stylesheet" href="style.css" /> -->
   <style>
     html {
       background: linear-gradient(#D4145A, #FBB03B);
@@ -25,8 +25,7 @@
       color: white;
     }
 
-    .form,
-    table {
+    .form {
       width: 300px;
       margin: auto;
 
@@ -52,8 +51,14 @@
       margin-top: 5px;
       background-color: white;
       text-decoration: none;
-      color:black;
+      color: black;
+      margin-top: 10px;
+      transition: all 0.3s ease;
+    }
 
+    .form-but:hover {
+      background-color: #f0f0f0;
+      color: #333;
     }
 
     input {
@@ -73,8 +78,6 @@
       color: white;
       opacity: 1;
     }
-
-
   </style>
 </head>
 
@@ -85,8 +88,8 @@
       <input type="text" placeholder="Please enter your product title." name="title" id="title" required
         value="<%= obj.title %>" />
       <br />
-      <input type="number" step="0.01" placeholder="Please enter your product price." name="price" id="price" required
-        value="<%= obj.price %>" />
+      <input type="number" step="0.01" placeholder="Please enter your product price." name="price" id="price"
+        max="9999999999" min="0" required value="<%= obj.price %>" />
       <br />
       <input type="text" placeholder="Please enter your product description." name="description" id="description"
         required value="<%= obj.description %>" />
@@ -98,8 +101,8 @@
         value="<%= obj.UUID %>" />
       <input type="hidden" name="id" value="<%= obj._id %>" />
       <br />
-      <button type="submit" class="form-but">Send</button>
-      <a  href='/' class="form-but a">Get back!</a>
+      <button type="submit" class="form-but">Send →</button>
+      <a href='/' class="form-but a">Get back!</a>
     </div>
   </form>
 </body>

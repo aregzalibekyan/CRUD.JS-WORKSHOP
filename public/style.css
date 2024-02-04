@@ -30,20 +30,20 @@ table {
 }
 
 .form-but {
-  padding: 10px;
-  font-size: 20px;
+  padding: 15px 25px;
+  font-size: 18px;
   border-radius: 10px;
   border: transparent;
   cursor: pointer;
-  margin-top: 5px;
-  background-color: white;
+  background-color: #d4145a;
   text-decoration: none;
-  color:black;
+  color: white;
+  display: inline-block;
   transition: background-color 0.3s ease;
 }
+
 .form-but:hover {
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #fbb03b;
 }
 input {
   color:white;
@@ -79,11 +79,7 @@ table {
 
 }
 
-.trhead {
-  background-color:black;
-  color: #333;
-  font-weight: bold
-}
+
 
 table,
 th,
@@ -127,4 +123,23 @@ table tr:nth-child(odd) td {
 }
 .single:hover,table tr:nth-child(odd) .single:hover {
   color:brown;
+}
+@media only screen and (max-width: 600px) {
+  body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+  table {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    border: 1px solid #D4145A;
+  }
+  table tr td {
+    padding: 0;
+  }
 }

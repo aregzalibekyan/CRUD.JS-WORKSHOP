@@ -16,43 +16,98 @@
         background-repeat: no-repeat;
         width: 100vw;
         height: 100vh;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
 
       body {
-        font-family: "poppins", sans-serif;
+        font-family: "Poppins", sans-serif;
         font-weight: lighter;
-        color: white;
+        color: black;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .sides {
+        display: flex;
+        align-items: center;
+        width: 80%;
+        margin: auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 15px;
+        overflow: hidden;
+      }
+
+      .left {
+        flex: 1;
+        text-align: center;
+        padding: 30px;
+      }
+
+      .left h1 {
+        margin-bottom: 20px;
+        font-size: 2.5em;
+      }
+
+      .left img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .right {
+        flex: 1;
+        text-align: left;
+        padding: 30px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      li {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
       }
 
       .form-but {
-        padding: 10px;
-        font-size: 20px;
+        padding: 15px 25px;
+        font-size: 18px;
         border-radius: 10px;
         border: transparent;
         cursor: pointer;
-        margin-top: 5px;
-        background-color: white;
+        background-color: #d4145a;
         text-decoration: none;
-        color: black;
-        margin-top: 10px;
-        transition: all 0.3s ease;
+        color: white;
+        display: inline-block;
+        transition: background-color 0.3s ease;
       }
 
       .form-but:hover {
-        background-color: #f0f0f0;
-        color: #333;
+        background-color: #fbb03b;
       }
-      .sides {
-        display:flex;
-        align-items: center;
-        
+      a {
+        font-weight: 600;
       }
-      .right {
-        margin-left:100px;
-      }
-      li {
-        font-size:20px;
-        font-weight:bold;
+      @media only screen and (max-width: 600px) {
+        body {
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          padding: 0;
+          
+        }
+       .right {
+        overflow-x:scroll;
+       }
       }
     </style>
     <link rel="icon" type="image/x-icon" href="img/icon.png" />
@@ -61,17 +116,16 @@
     <div class="sides">
       <div class="left">
         <h1><%= obj.title %></h1>
-        <img src="<%= obj.imgUrl %>" width="70%" />
+        <img src="<%= obj.imgUrl %>" alt="<%= obj.title %>" />
       </div>
       <div class="right">
         <ul>
-        <li>Price:<%= obj.price %>$</lo>
-        <li>Description:<%= obj.description%></li>
-        <li>UUID:<%= obj.UUID %></li>
+          <li>Price: <%= obj.price %>$</li>
+          <li>Description: <%= obj.description %></li>
+          <li>UUID: <%= obj.UUID %></li>
         </ul>
-        <a href="/" class="form-but a">Get back!</a>
+        <a href="/" class="form-but">Get back!</a>
       </div>
     </div>
-    
   </body>
 </html>

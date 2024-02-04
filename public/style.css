@@ -1,21 +1,31 @@
 html {
-  background: linear-gradient(#D4145A, #FBB03B);
-  background-repeat: no-repeat;
-  width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
 body {
   font-family: "poppins", sans-serif;
   font-weight: lighter;
   color: white;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  min-height: 100%;
 }
 
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: linear-gradient(#D4145A, #FBB03B);
+}
 .form,
 table {
   width: 300px;
   margin: auto;
-
 }
 
 .form {
@@ -26,8 +36,8 @@ table {
   justify-content: center;
   text-align: center;
   border-radius: 25px;
-  
 }
+
 
 .form-but {
   padding: 15px 25px;
@@ -76,7 +86,7 @@ table tr td {
 table {
   border-spacing: 2px;
   border-color: gray;
-
+  background: gray;
 }
 
 
@@ -87,10 +97,6 @@ td {
   border-collapse: separate;
   border-spacing: 1px;
 
-}
-
-table {
-  background: gray;
 }
 
 .update,

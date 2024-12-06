@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const port = 4000;
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
-const connectionString =
-  "mongodb+srv://aregzalibekyan:613235RuzannaQ@cluster0.p1fxrej.mongodb.net/Tumo_products";
+require('dotenv').config();
+const connectionString = process.env.CONNECTION_STRING || "PUT YOUR CONNECTION STRING HERE";
+
 const db1 = mongoose.connection;
 db1.on("error", console.error.bind(console, "Connection error:"));
 app.use(bodyParser.urlencoded({ extended: true }));
